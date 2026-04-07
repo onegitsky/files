@@ -98,6 +98,7 @@ output DP-1 allow_tearing yes max_render_time off resolution 1920x1080@60Hz posi
 exec {
 nm-applet
 autotiling
+waybar
 # gsettings set org.gnome.desktop.interface gtk-theme 'Material-Black-Lain'
 # gsettings set org.gnome.desktop.interface icon-theme 'Mono-Grey'
 # gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Classic'
