@@ -1,0 +1,96 @@
+{
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    "output": "DP-1",
+    
+     "height": 25, // Waybar height (to be removed for auto height)
+    // Archived modules
+    // "custom/gpu",  "custom/weather","sway/window", "custom/gpu",  "custom/media",  
+    // Choose the order of the modules
+
+    "modules-left": ["sway/workspaces"],
+    "modules-center": ["sway/window","sway/mode"],
+    "modules-right": ["pulseaudio","clock#time","custom/scratchpad_indicator","tray",],
+    
+    // Modules configuration
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": false,
+        "format": "{icon}",
+        "format-icons": {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "10": "10",
+            "urgent": "",
+            "default": ""
+        }
+    },
+    "sway/mode": {
+        "format": "<span style=\"italic\"> {} </span>"
+    },
+    "sway/window": {
+        "format": "{}",
+        "max-length": 40,
+        "tooltip": false,
+        "all-outputs": true,
+        "icon": false,
+    },
+    "tray": {
+        "icon-size": 14,
+        "spacing": 4
+    },
+    "clock#time": {
+        "interval": "1",
+        "format": "{:%I:%M%p}",
+        "tooltip": false,
+        "on-click": "foot --app-id calcurse -c ~/.config/foot/foot.ini -e calcurse",
+    },
+    "pulseaudio": {
+        "scroll-step": 5, // %, can be a float
+        "format": "{icon} {volume:2}% {format_source}",
+        "format-bluetooth": "󱡏 {volume}% {format_source}",
+        "format-bluetooth-muted": "{icon} {format_source}",
+        "format-muted": "MUT 0% {format_source}",
+        "format-source": "<span color=\"#ebebeb\"> {volume:2}%</span>",
+        "format-source-muted": "<span color=\"#4c566a\"></span>",
+        "max-volume": 125,
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "󰁹",
+            "headset": "󰁹",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["<span color=\"#657b83\">LOW</span>", "<span color=\"#839496\">MED</span>", "MAX"]
+        },
+        "on-click-middle": "pavucontrol",
+        "on-click-right": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "tooltip": false,
+    },
+    "custom/playerctl": {
+        "exec": "~/.config/waybar/custom_modules/media-player-status.py --player=quodlibet",
+        "return-type": "json",
+        "on-click": "playerctl -p quodlibet play-pause",
+        "on-click-middle": "~/.local/bin/waybar-scripts/spot-skip.py && playerctl -p quodlibet next",
+        "on-click-right": "playerctl -p quodlibet volume 1 && ~/.local/bin/waybar-scripts/spot-dunst.sh",
+        "on-scroll-up": "playerctl -p quodlibet volume 0.1+ && ~/.local/bin/waybar-scripts/spot-dunst.sh",
+        "on-scroll-down": "playerctl -p quodlibet volume 0.1- && ~/.local/bin/waybar-scripts/spot-dunst.sh",
+        "tooltip": false,
+    },
+    "custom/scratchpad_indicator": {
+        "interval": 1,
+        "exec": "swaymsg -t get_tree | ~/.config/waybar/custom_modules/scratchpads.py",
+        "format": "󱂬 {}",
+        "on-click-right": "foot -c ~/.config/foot/foot.ini -e cava",
+        "on-click": "swaymsg 'scratchpad show'",
+        "tooltip": false
+    },
+}
